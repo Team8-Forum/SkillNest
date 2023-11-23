@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SkillNest/SkillNest.iml" filepath="$PROJECT_DIR$/SkillNest/SkillNest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/VirtualTeacher.iml" filepath="$PROJECT_DIR$/.idea/VirtualTeacher.iml" />
     </modules>
   </component>
