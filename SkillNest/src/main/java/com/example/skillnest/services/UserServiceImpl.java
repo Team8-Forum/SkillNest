@@ -38,6 +38,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getByEmai(String email){
+        return userRepository.getByEmail(email);
+    }
+
+    @Override
     public void create(User user) {
         checkIfUserIsUnique(user);
         userRepository.create(user);

@@ -13,6 +13,8 @@ public interface UserService {
 
     User getById(int id);
 
+    User getByEmai(String emaill);
+
     void create(User user);
 
     void update(User executingUser, User userToUpdate);
