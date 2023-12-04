@@ -1,6 +1,7 @@
 package com.example.skillnest.repositories;
 
 import com.example.skillnest.exceptions.EntityNotFoundException;
+import com.example.skillnest.models.Course;
 import com.example.skillnest.models.User;
 import com.example.skillnest.models.UserFilterOptions;
 import com.example.skillnest.repositories.contracts.UserRepository;
@@ -107,6 +108,19 @@ public class UserRepositoryImpl implements UserRepository {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.merge(user);
+            session.getTransaction().commit();
+        }
+    }
+
+    @Override
+    public void setToGraduated(int userId, int courseId) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query<Course> query = session.createNativeQuery("UPDATE enrolled_courses e set e.is_graduated = 1" +
+                    " where e.user_id = :userId and e.course_id = :courseId", Course.class);
+            query.setParameter("userId", userId);
+            query.setParameter("courseId", courseId);
+            query.executeUpdate();
             session.getTransaction().commit();
         }
     }

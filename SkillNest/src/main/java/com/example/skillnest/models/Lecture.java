@@ -15,9 +15,8 @@ public class Lecture {
     private String title;
     @Column(name= "description")
     private String description;
-    @OneToOne
-    @JoinColumn(name = "assignment_id")
-    private Assignment assignment;
+    @Column(name = "assignment_url")
+    private String assignmentUrl;
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
@@ -53,12 +52,12 @@ public class Lecture {
         this.description = description;
     }
 
-    public Assignment getAssignment() {
-        return assignment;
+    public String getAssignmentUrl() {
+        return assignmentUrl;
     }
 
-    public void setAssignment(Assignment assignment) {
-        this.assignment = assignment;
+    public void setAssignmentUrl(String assignmentUrl) {
+        this.assignmentUrl = assignmentUrl;
     }
 
     public Course getCourse() {

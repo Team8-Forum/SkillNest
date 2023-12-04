@@ -19,6 +19,12 @@ public interface UserService {
 
     void update(User executingUser, User userToUpdate);
 
+    User enrollCourse(User user, int courseId);
+
+    User addProfilePhoto(User user, String url);
+
+    void setToGraduated(int userId, int courseId);
+
     User updateAdmin(User executingUser, int id);
 
     User updateTeacher(User executingUser, int id);

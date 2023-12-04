@@ -97,6 +97,18 @@ public class UserRestController {
         }
     }
 
+    @PostMapping("/course/{courseId}")
+    public User enrollCourse(@RequestHeader HttpHeaders httpHeaders, @PathVariable int courseId) {
+        try {
+            User user = authenticationHelper.tryGetUser(httpHeaders);
+            return userService.enrollCourse(user, courseId);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
     @PutMapping("/{id}/admin")
     public User updateAdmin(@RequestHeader HttpHeaders headers,@PathVariable int id){
         try {
