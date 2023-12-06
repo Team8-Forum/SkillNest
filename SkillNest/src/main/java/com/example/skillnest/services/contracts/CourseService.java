@@ -1,12 +1,15 @@
 package com.example.skillnest.services.contracts;
 
 import com.example.skillnest.models.Course;
+import com.example.skillnest.models.CourseFilterOptions;
 import com.example.skillnest.models.User;
 
 import java.util.List;
 
 public interface CourseService {
     List<Course> getAll();
+
+    List<Course> get(CourseFilterOptions filterOptions);
 
     Course get(int id);
 

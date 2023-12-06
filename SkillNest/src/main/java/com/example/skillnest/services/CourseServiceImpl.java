@@ -3,6 +3,7 @@ package com.example.skillnest.services;
 import com.example.skillnest.exceptions.EntityDuplicateException;
 import com.example.skillnest.exceptions.EntityNotFoundException;
 import com.example.skillnest.models.Course;
+import com.example.skillnest.models.CourseFilterOptions;
 import com.example.skillnest.models.User;
 import com.example.skillnest.repositories.CourseRepositoryImpl;
 import com.example.skillnest.services.contracts.CourseService;
@@ -22,6 +23,12 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getAll() {
         return courseRepository.getAll();
+    }
+
+
+    @Override
+    public List<Course> get(CourseFilterOptions filterOptions) {
+        return courseRepository.getAll(filterOptions);
     }
 
     @Override
