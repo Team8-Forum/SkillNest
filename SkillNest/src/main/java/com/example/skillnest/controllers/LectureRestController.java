@@ -5,6 +5,7 @@ import com.example.skillnest.exceptions.EntityNotFoundException;
 import com.example.skillnest.helpers.AuthenticationHelper;
 import com.example.skillnest.models.Lecture;
 import com.example.skillnest.models.User;
+import com.example.skillnest.models.dtos.LectureDto;
 import com.example.skillnest.services.contracts.LectureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -39,7 +40,7 @@ public class LectureRestController {
     }
 
     @PostMapping
-    public Lecture create(@RequestHeader HttpHeaders headers, @Valid @RequestBody Lecture lecture) {
+    public Lecture create(@RequestHeader HttpHeaders headers, @RequestBody LectureDto lectureDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             return lectureService.create(lectureDto, user);
@@ -50,7 +51,7 @@ public class LectureRestController {
 
     @PutMapping("/{lectureId")
     public Lecture update(@RequestHeader HttpHeaders headers, @PathVariable int lectureId,
-                          @Valid @RequestBody LectureDto lectureDto) {
+                          @RequestBody LectureDto lectureDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             return lectureService.update(lectureDto, user, lectureId);

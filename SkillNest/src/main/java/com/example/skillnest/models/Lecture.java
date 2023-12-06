@@ -1,5 +1,6 @@
 package com.example.skillnest.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.sql.ast.tree.update.Assignment;
 import org.springframework.data.annotation.Id;
@@ -21,10 +22,13 @@ public class Lecture {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-
     @ManyToOne
     @JoinColumn(name = "video_id")
     private Video video;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonManagedReference
+    private User createdBy;
 
     public Lecture() {
     }
@@ -75,6 +79,14 @@ public class Lecture {
 
     public void setVideo(Video video) {
         this.video = video;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 }
 
