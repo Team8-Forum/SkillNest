@@ -7,15 +7,15 @@ import org.hibernate.sql.ast.tree.update.Assignment;
 public class LectureDto {
     private String title;
     private String description;
-    private Assignment assignment;
+    private String assignmentUrl;
     private Course course;
     private Video video;
 
 
-    public LectureDto(String title, String description, Assignment assignment, Course course, Video video) {
+    public LectureDto(String title, String description, String assignmentUrl, Course course, Video video) {
         this.title = title;
         this.description = description;
-        this.assignment = assignment;
+        this.assignmentUrl = assignmentUrl;
         this.course = course;
         this.video = video;
     }
@@ -39,12 +39,12 @@ public class LectureDto {
         this.description = description;
     }
 
-    public Assignment getAssignment() {
-        return assignment;
+    public String getAssignment() {
+        return assignmentUrl;
     }
 
-    public void setAssignment(Assignment assignment) {
-        this.assignment = assignment;
+    public void setAssignment(String assignmentUrl) {
+        this.assignmentUrl = assignmentUrl;
     }
 
     public Course getCourse() {return course;}

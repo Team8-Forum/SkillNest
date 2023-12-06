@@ -3,12 +3,15 @@ package com.example.skillnest.services;
 import com.example.skillnest.exceptions.AuthorizationException;
 import com.example.skillnest.exceptions.EntityDuplicateException;
 import com.example.skillnest.exceptions.EntityNotFoundException;
+import com.example.skillnest.models.Course;
 import com.example.skillnest.models.User;
 import com.example.skillnest.models.UserFilterOptions;
 import com.example.skillnest.repositories.contracts.UserRepository;
+import com.example.skillnest.services.contracts.CourseService;
 import com.example.skillnest.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -17,10 +20,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final CourseService courseService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, CourseService courseService) {
         this.userRepository = userRepository;
+        this.courseService = courseService;
     }
 
     @Override
@@ -58,6 +63,27 @@ public class UserServiceImpl implements UserService {
         }
         checkIfUserIsUnique(updateUser);
         userRepository.update(updateUser);
+    }
+
+    @Override
+    public User enrollCourse(User user, int courseId) {
+        Course course = courseService.get(courseId);
+        user.addCourse(course);
+        userRepository.update(user);
+        return user;
+    }
+
+    @Override
+    public User addProfilePhoto(User user, String url) {
+        user.setPicUrl(url);
+        userRepository.update(user);
+        return user;
+    }
+
+    @Transactional
+    @Override
+    public void setToGraduated(int userId, int courseId){
+        userRepository.setToGraduated(userId, courseId);
     }
 
     @Override

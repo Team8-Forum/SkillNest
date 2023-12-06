@@ -18,4 +18,6 @@ public interface UserRepository {
     void create(User user);
 
     void update(User user);
+
+    void setToGraduated(int userId, int courseId);
 }

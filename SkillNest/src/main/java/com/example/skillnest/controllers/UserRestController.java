@@ -41,7 +41,6 @@ public class UserRestController {
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String email,
-            @RequestParam(required = false) String username,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder){
         try{
@@ -97,12 +96,23 @@ public class UserRestController {
         }
     }
 
+    @PostMapping("/course/{courseId}")
+    public User enrollCourse(@RequestHeader HttpHeaders httpHeaders, @PathVariable int courseId) {
+        try {
+            User user = authenticationHelper.tryGetUser(httpHeaders);
+            return userService.enrollCourse(user, courseId);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
     @PutMapping("/{id}/admin")
     public User updateAdmin(@RequestHeader HttpHeaders headers,@PathVariable int id){
         try {
             User executeUser = authenticationHelper.tryGetUser(headers);
-            User updateUser = userService.updateAdmin(executeUser,id);
-            return updateUser;
+            return userService.updateAdmin(executeUser,id);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e){
@@ -114,8 +124,7 @@ public class UserRestController {
     public User updateTeacher(@RequestHeader HttpHeaders headers,@PathVariable int id){
         try {
             User executeUser = authenticationHelper.tryGetUser(headers);
-            User updateUser = userService.updateTeacher(executeUser,id);
-            return updateUser;
+            return userService.updateTeacher(executeUser,id);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e){
