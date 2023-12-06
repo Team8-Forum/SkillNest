@@ -84,7 +84,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     public double getGradeForCourse(int userId, int courseId) {
-        Course course = courseService.getById(courseId);
+        Course course = courseService.get(courseId);
         List<Assignment> submittedAssignments = assignmentRepository.getByUserCourse(userId, courseId);
         int submittedAssignmentsCount = submittedAssignments.size();
         int assignmentsToSubmit = course.getLectures().size();
