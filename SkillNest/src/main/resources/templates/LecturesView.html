@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lectures View</title>
+</head>
+<body>
+
+<h1>Lectures View</h1>
+
+<!-- Assuming you have a Course object passed to the template -->
+<div th:each="lecture : ${course.lectures}">
+    <p>
+        <!-- Link to open the entire lecture -->
+        <a th:href="@{'/lectures/' + ${lecture.id}}"> <!-- Assuming your endpoint is /lectures/{id} -->
+            <span th:text="${lecture.title}"></span>
+        </a>
+    </p>
+</div>
+
+</body>
+</html>

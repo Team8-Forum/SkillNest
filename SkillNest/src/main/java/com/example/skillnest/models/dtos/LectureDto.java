@@ -8,16 +8,14 @@ public class LectureDto {
     private String title;
     private String description;
     private String assignmentUrl;
-    private Course course;
-    private Video video;
+    private String videoUrl;
 
 
-    public LectureDto(String title, String description, String assignmentUrl, Course course, Video video) {
+    public LectureDto(String title, String description, String assignmentUrl, Course course, String videoUrl) {
         this.title = title;
         this.description = description;
         this.assignmentUrl = assignmentUrl;
-        this.course = course;
-        this.video = video;
+        this.videoUrl = videoUrl;
     }
 
     public LectureDto() {
@@ -47,15 +45,11 @@ public class LectureDto {
         this.assignmentUrl = assignmentUrl;
     }
 
-    public Course getCourse() {return course;}
-
-    public void setCourse(Course course) {this.course = course;}
-
-    public Video getVideo() {
-        return video;
+    public String getVideoUrl() {
+        return videoUrl;
     }
 
-    public void setVideo(Video video) {
-        this.video = video;
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 }

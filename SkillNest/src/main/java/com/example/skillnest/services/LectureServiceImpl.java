@@ -39,8 +39,7 @@ public class LectureServiceImpl implements LectureService {
         lecture.setTitle(lectureDto.getTitle());
         lecture.setDescription(lectureDto.getDescription());
         lecture.setAssignmentUrl(lectureDto.getAssignment());
-        lecture.setCourse(lectureDto.getCourse());
-        lecture.setVideo(lectureDto.getVideo());
+        lecture.setVideoUrl(lectureDto.getVideoUrl());
         return lectureRepository.create(lecture);
     }
 
@@ -53,8 +52,7 @@ public class LectureServiceImpl implements LectureService {
         lecture.setTitle(lectureDto.getTitle());
         lecture.setDescription(lectureDto.getDescription());
         lecture.setAssignmentUrl(lectureDto.getAssignment());
-        lecture.setCourse(lectureDto.getCourse());
-        lecture.setVideo(lectureDto.getVideo());
+        lecture.setVideoUrl(lectureDto.getVideoUrl());
 
         return lecture;
     }

@@ -2,6 +2,7 @@ package com.example.skillnest.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import org.hibernate.sql.ast.tree.update.Assignment;
 import org.springframework.data.annotation.Id;
 @Entity
@@ -12,18 +13,19 @@ public class Lecture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "lecture_id")
     private int id;
+    @Size(min = 5, max = 50)
     @Column(name= "title")
     private String title;
+    @Size(max = 1000)
     @Column(name= "description")
     private String description;
-    @Column(name = "assignment_url")
+    @Column(name = "assignment_id")
     private String assignmentUrl;
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-    @ManyToOne
-    @JoinColumn(name = "video_id")
-    private Video video;
+    @Column(name = "video_id")
+    private String videoUrl;
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonManagedReference
@@ -72,12 +74,12 @@ public class Lecture {
         this.course = course;
     }
 
-    public Video getVideo() {
-        return video;
+    public String getVideoUrl() {
+        return videoUrl;
     }
 
-    public void setVideo(Video video) {
-        this.video = video;
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
     public User getCreatedBy() {

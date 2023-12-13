@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Lecture</title>
+    <!-- Include necessary libraries or stylesheets here, e.g., Bootstrap for styling -->
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css"th:href="@{/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" href="css/owl.carousel.css"th:href="@{/css/owl.carousel.css}"/>
+    <link rel="stylesheet" href="css/style.css" th:href="@{/css/style.css}"/>
+
+</head>
+
+<body>
+
+<h1>Create Lecture</h1>
+
+<form th:action="@{/lectures/create}" method="post" enctype="multipart/form-data">
+
+    <!-- Lecture Title -->
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+    </div>
+
+    <!-- Lecture Description -->
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+    </div>
+
+    <!-- YouTube Video Link -->
+    <div>
+        <label for="videoUrl">YouTube Video Link:</label>
+        <input type="text" id="videoUrl" name="videoUrl" placeholder="e.g., https://www.youtube.com/watch?v=your_video_id" required>
+    </div>
+
+    <!-- File Upload for Text File -->
+    <div>
+        <label for="assignmentFile">Upload Text File:</label>
+        <input type="file" id="assignmentFile" name="assignmentFile" accept=".txt" required>
+    </div>
+
+    <!-- Submit Button -->
+    <div>
+        <button type="submit">Create Lecture</button>
+    </div>
+
+</form>
+
+<!-- footer section -->
+<footer class="footer-section spad pb-0">
+    <div class="footer-top">
+        <div class="footer-warp">
+            <div class="row">
+                <div class="widget-item">
+                    <h4>Contact Info</h4>
+                    <ul class="contact-list">
+                        <li>1481 Creekside Lane <br>Avila Beach, CA 931</li>
+                        <li>+53 345 7953 32453</li>
+                        <li>yourmail@gmail.com</li>
+                    </ul>
+                </div>
+                <div class="widget-item">
+                    <h4>Engeneering</h4>
+                    <ul>
+                        <li><a href="">Applied Studies</a></li>
+                        <li><a href="">Computer Engeneering</a></li>
+                        <li><a href="">Software Engeneering</a></li>
+                        <li><a href="">Informational Engeneering</a></li>
+                        <li><a href="">System Engeneering</a></li>
+                    </ul>
+                </div>
+                <div class="widget-item">
+                    <h4>Graphic Design</h4>
+                    <ul>
+                        <li><a href="">Applied Studies</a></li>
+                        <li><a href="">Computer Engeneering</a></li>
+                        <li><a href="">Software Engeneering</a></li>
+                        <li><a href="">Informational Engeneering</a></li>
+                        <li><a href="">System Engeneering</a></li>
+                    </ul>
+                </div>
+                <div class="widget-item">
+                    <h4>Development</h4>
+                    <ul>
+                        <li><a href="">Applied Studies</a></li>
+                        <li><a href="">Computer Engeneering</a></li>
+                        <li><a href="">Software Engeneering</a></li>
+                        <li><a href="">Informational Engeneering</a></li>
+                        <li><a href="">System Engeneering</a></li>
+                    </ul>
+                </div>
+                <div class="widget-item">
+                    <h4>Newsletter</h4>
+                    <form class="footer-newslatter">
+                        <input type="email" placeholder="E-mail">
+                        <button class="site-btn">Subscribe</button>
+                        <p>*We don’t spam</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="footer-warp">
+            <ul class="footer-menu">
+                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Register</a></li>
+                <li><a href="#">Privacy</a></li>
+            </ul>
+            <div class="copyright">
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+                    href="https://colorlib.com" target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
+        </div>
+    </div>
+</footer>
+<!-- footer section end -->
+
+
+</body>
+</html>
