@@ -1,4 +1,4 @@
-package com.example.skillnest.controllers;
+package com.example.skillnest.controllers.rest;
 
 import com.example.skillnest.exceptions.AuthorizationException;
 import com.example.skillnest.exceptions.EntityNotFoundException;

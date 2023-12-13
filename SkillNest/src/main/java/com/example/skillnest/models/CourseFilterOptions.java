@@ -14,6 +14,9 @@ public class CourseFilterOptions {
 
     private Optional<String> sortOrder;
 
+    public CourseFilterOptions() {
+    }
+
     public CourseFilterOptions (String title,
                                 String topic,
                                 LocalDate startingDate,
