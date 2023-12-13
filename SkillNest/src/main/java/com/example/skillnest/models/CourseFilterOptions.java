@@ -1,6 +1,6 @@
 package com.example.skillnest.models;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class CourseFilterOptions {
@@ -8,7 +8,7 @@ public class CourseFilterOptions {
 
     private Optional<String> topic;
 
-    private Optional<Date> startingDate;
+    private Optional<LocalDate> startingDate;
 
     private Optional<String> sortBy;
 
@@ -16,7 +16,7 @@ public class CourseFilterOptions {
 
     public CourseFilterOptions (String title,
                                 String topic,
-                                Date startingDate,
+                                LocalDate startingDate,
                                 String sortBy,
                                 String sortOrder) {
         this.title = Optional.ofNullable(title);
@@ -34,7 +34,7 @@ public class CourseFilterOptions {
         return topic;
     }
 
-    public Optional<Date> getStartingDate() {
+    public Optional<LocalDate> getStartingDate() {
         return startingDate;
     }
 

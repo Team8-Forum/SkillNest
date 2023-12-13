@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class CourseRestController {
     @GetMapping
     public List<Course> get(@RequestParam(required = false) String title,
                             @RequestParam(required = false) String topic,
-                            @RequestParam(required = false) Date startingDate,
+                            @RequestParam(required = false) LocalDate startingDate,
                             @RequestParam(required = false) String sortBy,
                             @RequestParam(required = false) String sortOrder) {
         CourseFilterOptions filterOptions = new CourseFilterOptions(title, topic,
