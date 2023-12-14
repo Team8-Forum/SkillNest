@@ -7,7 +7,7 @@ import com.example.skillnest.helpers.AuthenticationHelper;
 import com.example.skillnest.helpers.UserMapper;
 import com.example.skillnest.models.User;
 import com.example.skillnest.models.UserFilterOptions;
-import com.example.skillnest.models.dtos.RegisterUserDto;
+import com.example.skillnest.models.dtos.RegisterDto;
 import com.example.skillnest.models.dtos.UserDto;
 import com.example.skillnest.services.contracts.UserService;
 import jakarta.validation.Valid;
@@ -68,7 +68,7 @@ public class UserRestController {
     }
 
     @PostMapping
-    public User create(@Valid @RequestBody RegisterUserDto registerUserDto){
+    public User create(@Valid @RequestBody RegisterDto registerUserDto){
         try{
             User user = userMapper.registerDTOToObject(registerUserDto);
             userService.create(user);

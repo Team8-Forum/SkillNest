@@ -49,7 +49,7 @@ public class LectureRestController {
         }
     }
 
-    @PutMapping("/{lectureId")
+    @PutMapping("/{lectureId}")
     public Lecture update(@RequestHeader HttpHeaders headers, @PathVariable int lectureId,
                           @RequestBody LectureDto lectureDto) {
         try {

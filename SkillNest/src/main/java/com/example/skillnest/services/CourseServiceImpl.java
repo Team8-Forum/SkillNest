@@ -37,6 +37,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public List<Course>getByUserEnrolled(int user_id){
+        return courseRepository.getAllByUserEnrolled(user_id);
+    }
+
+    @Override
     public void create(Course course, User user) {
         boolean duplicateExists = true;
         try {
