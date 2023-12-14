@@ -59,7 +59,7 @@ public class CourseMvcController {
         model.addAttribute("courses", courseService.get(new CourseFilterOptions()));
         return "CourseView";
     }
-
+    @GetMapping("/{id}")
     public String showSingleCourse(@PathVariable int id, Model model) {
         try {
             Course course = courseService.get(id);

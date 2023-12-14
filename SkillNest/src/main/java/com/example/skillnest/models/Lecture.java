@@ -19,17 +19,17 @@ public class Lecture {
     @Size(max = 1000)
     @Column(name= "description")
     private String description;
-    @Column(name = "assignment_id")
+    @Column(name = "assignment_url")
     private String assignmentUrl;
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-    @Column(name = "video_id")
+    @Column(name = "video_url")
     private String videoUrl;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonManagedReference
-    private User createdBy;
+   @ManyToOne
+   @JoinColumn(name = "user_id")
+   @JsonManagedReference
+   private User createdBy;
 
     public Lecture() {
     }
@@ -82,12 +82,8 @@ public class Lecture {
         this.videoUrl = videoUrl;
     }
 
-    public User getCreatedBy() {
-        return createdBy;
-    }
+    public User getCreatedBy() { return createdBy; }
 
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
+    public void setCreatedBy(User createdBy) { this.createdBy = createdBy;}
 }
 

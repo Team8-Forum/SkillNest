@@ -137,7 +137,7 @@
                         </div>
                     </div>
                     <a href="#" class="site-btn price-btn">Enroll</a>
-                    <a href="#" class="site-btn buy-btn">See All Lectures</a>
+                    <a th:href="@{'/courses/' + ${course.getId()}/lectures}" class="site-btn buy-btn">See All Lectures</a>
                 </div>
             </div>
         </div>

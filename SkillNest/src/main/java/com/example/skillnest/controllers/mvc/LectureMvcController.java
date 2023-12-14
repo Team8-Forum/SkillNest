@@ -21,8 +21,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@RequestMapping
+
 @Controller
+@RequestMapping("/courses/{courseId}/lectures")
 public class LectureMvcController {
 
     private final LectureService lectureService;
@@ -51,7 +52,28 @@ public class LectureMvcController {
     public String requestURI(final HttpServletRequest request) {
         return request.getRequestURI();
     }
-    @GetMapping("/courses/{courseId}/lectures/create")
+
+    @GetMapping("/{lectureId}")
+    public String showLecture(@PathVariable int courseId, @PathVariable int lectureId, Model model, HttpSession session) {
+        try {
+            authenticationHelper.tryGetCurrentUser(session);
+            Course course = courseService.get(courseId);
+            Lecture lecture = lectureService.getById(lectureId);
+
+            // Add the lecture to the model
+            model.addAttribute("lecture", lecture);
+            model.addAttribute("course", course);
+
+            return "LectureView";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "ErrorView";
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+    }
+    @GetMapping("/create")
     public String showLectureForm(@PathVariable("courseId") int courseId, Model model, HttpSession session) {
         try {
             authenticationHelper.tryGetCurrentUser(session);
@@ -65,7 +87,7 @@ public class LectureMvcController {
         return "LectureFormView";
     }
 
-    @PostMapping("/courses/{courseId}/lectures/create")
+    @PostMapping("/create")
     public String createLecture(@PathVariable("courseId") int courseId, @Valid @ModelAttribute("lecture") LectureDto lectureDTO,
                                 BindingResult bindingResult,
                                 Model model,
@@ -90,17 +112,17 @@ public class LectureMvcController {
             return "redirect:/auth/login";
         }
     }
-    @GetMapping("/{courseId}/lectures")
+    @GetMapping
     public String ShowAllLectures(@PathVariable("courseId") int courseId, Model model) {
         Course course = courseService.get(courseId);
         List<Lecture> lectures = course.getLectures();
         model.addAttribute("lectures", lectures);
         model.addAttribute("course", course);
 
-        return "CoursesView";
+        return "LecturesView";
     }
 
-    @GetMapping("/courses/{courseId}/lectures/{id}/update")
+    @GetMapping("/{id}/update")
     public String updateLectureForm(@PathVariable int id, Model model, HttpSession httpSession){
         try {
             authenticationHelper.tryGetCurrentUser(httpSession);
@@ -117,7 +139,7 @@ public class LectureMvcController {
         }
     }
 
-    @PostMapping("/courses/{courseId}/lectures/{id}/update")
+    @PostMapping("/{id}/update")
     public String updateLecture(@PathVariable int id,
                                 @Valid @ModelAttribute("lecture") LectureDto lectureDTO,
                                 BindingResult result,

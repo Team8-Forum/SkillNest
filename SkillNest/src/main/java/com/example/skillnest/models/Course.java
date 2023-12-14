@@ -26,17 +26,16 @@ public class Course {
     @Column(name = "description")
     private String description;
 
-    @Transient
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Lecture> lectures;
-
 
     @Column(name = "starting_date")
     private LocalDate startingDate;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "courses_users",
+            name = "enrolled_courses",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
