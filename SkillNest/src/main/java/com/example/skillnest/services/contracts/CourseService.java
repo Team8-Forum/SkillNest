@@ -13,6 +13,8 @@ public interface CourseService {
 
     Course get(int id);
 
+    public List<Course>getByUserEnrolled(int user_id);
+
     void create(Course course, User user);
 
     void update(Course course, User user);

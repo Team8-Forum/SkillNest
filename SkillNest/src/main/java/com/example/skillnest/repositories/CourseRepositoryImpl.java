@@ -94,6 +94,19 @@ public class CourseRepositoryImpl implements CourseRepository {
     }
 
     @Override
+    public List<Course> getAllByUserEnrolled(int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Course> query = session.createNativeQuery(
+                    "select c.* from courses c " +
+                            "join skillnest.enrolled_courses ec on c.course_id = ec.course_id " +
+                            "where ec.user_id = :id " +
+                            "and ec.is_graduated=0", Course.class);
+            query.setParameter("id", userId);
+            return query.list();
+        }
+    }
+
+    @Override
     public void create(Course course) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
