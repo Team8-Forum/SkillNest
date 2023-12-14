@@ -4,8 +4,12 @@ import com.example.skillnest.models.Lecture;
 import com.example.skillnest.models.User;
 import com.example.skillnest.models.dtos.LectureDto;
 
+import java.util.List;
+
 public interface LectureService {
     Lecture getById(int id);
+
+    List<Lecture> get();
 
     Lecture create(LectureDto lectureDto, User user);
 

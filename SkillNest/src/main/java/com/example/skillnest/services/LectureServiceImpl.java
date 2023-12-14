@@ -11,6 +11,7 @@ import com.example.skillnest.services.contracts.LectureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -30,6 +31,11 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public Lecture getById(int id) {
         return lectureRepository.findLectureById(id);
+    }
+
+    @Override
+    public List<Lecture> get() {
+        return lectureRepository.get();
     }
 
     @Override

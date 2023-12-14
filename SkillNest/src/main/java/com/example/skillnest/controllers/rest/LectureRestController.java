@@ -1,4 +1,4 @@
-package com.example.skillnest.controllers;
+package com.example.skillnest.controllers.rest;
 
 import com.example.skillnest.exceptions.AuthorizationException;
 import com.example.skillnest.exceptions.EntityNotFoundException;
@@ -49,7 +49,7 @@ public class LectureRestController {
         }
     }
 
-    @PutMapping("/{lectureId")
+    @PutMapping("/{lectureId}")
     public Lecture update(@RequestHeader HttpHeaders headers, @PathVariable int lectureId,
                           @RequestBody LectureDto lectureDto) {
         try {

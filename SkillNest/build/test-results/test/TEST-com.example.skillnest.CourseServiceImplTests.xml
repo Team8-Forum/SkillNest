@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.skillnest.CourseServiceImplTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-12-13T14:59:14" hostname="DESKTOP-P0UIDA8" time="1.3">
+  <properties/>
+  <testcase name="delete_Should_CallRepository_When_UserIsAdmin()" classname="com.example.skillnest.CourseServiceImplTests" time="1.3"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

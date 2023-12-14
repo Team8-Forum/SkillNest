@@ -11,6 +11,8 @@ public interface CourseRepository {
 
     Course get(String name);
 
+    public List<Course> getAllByUserEnrolled(int userId);
+
     void create(Course course);
 
     void update(Course course);
