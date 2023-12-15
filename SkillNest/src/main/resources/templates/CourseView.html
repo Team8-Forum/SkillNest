@@ -31,9 +31,10 @@
 <!-- Header section end -->
 
 <!-- Page info -->
-<<div class="page-info-section set-bg" data-setbg="img/bg.jpg">
+<div class="page-info-section set-bg" data-setbg="img/bg.jpg">
     <div class="container">
         <div class="site-breadcrumb">
+            <a href="#">Home</a>
             <span>Courses</span>
         </div>
     </div>
@@ -83,7 +84,7 @@
                 </div>
                 <form th:if="${!course.getUsers().contains(user)}" th:action="@{/users/course/{courseId}/enroll(courseId=${course.getId()})}" class="site-btn buy-btn"
                       th:method="post">
-                    <button type="submit" class="rbt-btn btn-gradient col-12" href="#">Enroll Course
+                    <button type="submit" class="site-btn buy-btn" href="#">Enroll Course
                     </button>
                 </form>
                     <a th:if="${course.getUsers().contains(user)}" th:href="@{/courses/{courseId}/lectures(courseId=${course.getId()})}" class="site-btn buy-btn">See All Lectures</a>

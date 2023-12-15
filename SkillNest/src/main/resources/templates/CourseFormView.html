@@ -52,10 +52,12 @@
                     </div>
                     <!-- ... Thymeleaf ... -->
 
-                    <form class="contact-form" th:action="@{/courses/create}" method="post">
-                        <input type="text" placeholder="Course's Title" name="title">
-                        <input type="text" placeholder="Course's Topic" name="topic">
-                        <textarea placeholder="Description" name="description"></textarea>
+                    <form class="contact-form" th:action="@{/courses/new}" th:method="post" th:object="${course}">
+                        <input type="text" placeholder="Course's Title" name="title" th:field="*{title}">
+                        <input type="text" placeholder="Course's Topic" name="topic" th:field="*{topic}">
+                        <textarea placeholder="Description" name="description" th:field="*{content}"></textarea>
+                        <label for="startDate">Starting Date:</label>
+                        <input type="date" id="startDate" name="startDate" th:field="*{starting_date}" th:format="'yyyy-MM-dd'">
                         <button type="submit" class="site-btn">Create course</button>
                     </form>
 

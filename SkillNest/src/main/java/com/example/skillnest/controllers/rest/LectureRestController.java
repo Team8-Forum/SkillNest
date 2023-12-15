@@ -3,6 +3,8 @@ package com.example.skillnest.controllers.rest;
 import com.example.skillnest.exceptions.AuthorizationException;
 import com.example.skillnest.exceptions.EntityNotFoundException;
 import com.example.skillnest.helpers.AuthenticationHelper;
+import com.example.skillnest.helpers.LectureMapper;
+import com.example.skillnest.models.Course;
 import com.example.skillnest.models.Lecture;
 import com.example.skillnest.models.User;
 import com.example.skillnest.models.dtos.LectureDto;
@@ -19,11 +21,13 @@ import org.springframework.web.server.ResponseStatusException;
 public class LectureRestController {
     private final LectureService lectureService;
 
+    private final LectureMapper lectureMapper;
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public LectureRestController(LectureService lectureService, AuthenticationHelper authenticationHelper) {
+    public LectureRestController(LectureService lectureService, LectureMapper lectureMapper, AuthenticationHelper authenticationHelper) {
         this.lectureService = lectureService;
+        this.lectureMapper = lectureMapper;
         this.authenticationHelper = authenticationHelper;
     }
 
@@ -40,10 +44,11 @@ public class LectureRestController {
     }
 
     @PostMapping
-    public Lecture create(@RequestHeader HttpHeaders headers, @RequestBody LectureDto lectureDto) {
+    public Lecture create(@RequestHeader HttpHeaders headers, @RequestBody LectureDto lectureDto, Course course) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            return lectureService.create(lectureDto, user);
+            Lecture lecture = lectureMapper.dtoToObject(lectureDto, course.getId());
+            return lectureService.create(lecture, user);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }

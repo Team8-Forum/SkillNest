@@ -41,19 +41,9 @@
     </div>
 </div>
 <!-- Page info end -->
-
-
-<!-- single course section -->
-<section class="single-course spad pb-0">
-    <div class="container">
-        <div class="course-meta-area">
-            <!-- Your existing course meta area code -->
-        </div>
-        <img src="/static/img/courses/single.jpg" alt="" class="course-preview">
-    </div>
-</section>
-<!-- single course section end -->
-
+<div>
+    <a th:if="${isAuthenticated && user.isAdmin() || user.isTeacher()}" th:href="@{/courses/{courseId}/lectures/create(courseId=${course.getId()})}" class="site-btn buy-btn">Create Lecture</a>
+</div>
 <!-- Page -->
 <section class="blog-page spad pb-0">
     <div class="container">

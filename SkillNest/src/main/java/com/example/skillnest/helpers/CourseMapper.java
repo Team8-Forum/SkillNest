@@ -8,6 +8,9 @@ import com.example.skillnest.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 @Component
 public class CourseMapper {
 
@@ -25,13 +28,18 @@ public class CourseMapper {
         courseToBeUpdated.setTitle(dto.getTitle());
         courseToBeUpdated.setDescription(dto.getContent());
         courseToBeUpdated.setCreatedBy(user);
+        courseToBeUpdated.setTopic(dto.getTopic());
+        courseToBeUpdated.setStartingDate(dto.getStarting_date());
         return courseToBeUpdated;
     }
 
-    public Course fromDto(CourseDto dto) {
+    public Course fromDto(CourseDto dto,User user) {
         Course post = new Course();
         post.setTitle(dto.getTitle());
         post.setDescription(dto.getContent());
+        post.setCreatedBy(user);
+        post.setTopic(dto.getTopic());
+        post.setStartingDate(dto.getStarting_date());
         return post;
     }
 

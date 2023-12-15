@@ -51,10 +51,19 @@
                     </div>
                     <!-- ... Thymeleaf ... -->
 
-                    <form class="contact-form" th:action="@{/lectures/create}" method="post">
-                        <input type="text" placeholder="Lecture's Title" name="title">
-                        <textarea placeholder="Description" name="description"></textarea>
-                        <input type="text" placeholder="Link to a video" name="videoUrl">
+                    <form class="contact-form" th:action="@{/courses/{courseId}/lectures/create(courseId=${course.getId()})}" method="post" th:object="${lecture}">
+
+                        <label>Lecture's Title:</label>
+                        <input type="text" placeholder="Lecture's Title" th:field="*{title}" />
+
+                        <label>Description:</label>
+                        <textarea placeholder="Description" th:field="*{description}"></textarea>
+
+                        <label>Link to assignment:</label>
+                        <input placeholder="Assignment Url" th:field="*{assignment}">
+
+                        <label>Link to a video:</label>
+                        <input type="text" placeholder="Link to a video" th:field="*{videoUrl}" />
 
                         <button type="submit" class="site-btn">Upload Lecture</button>
                     </form>
