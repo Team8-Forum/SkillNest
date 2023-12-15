@@ -57,7 +57,7 @@
 
 
 <!-- Page info -->
-<div class="page-info-section set-bg" data-setbg="img/page-bg/2.jpg">
+<div class="page-info-section set-bg" data-setbg="/static/img/page-bg/2.jpg">
     <div class="container">
         <div class="site-breadcrumb">
             <a href="#">Home</a>
@@ -81,7 +81,7 @@
                     <form class="course-search-form">
                         <input type="text" placeholder="Course">
                         <input type="text" class="last-m" placeholder="Category">
-                        <button class="site-btn btn-dark">Search Couse</button>
+                        <button class="site-btn btn-dark">Search Course</button>
                     </form>
                 </div>
             </div>
@@ -95,72 +95,29 @@
 <section class="single-course spad pb-0">
     <div class="container">
         <div class="course-meta-area">
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1">
-                    <div class="course-note">Featured Course</div>
-                    <h4 class = "title" th:text="${course.getTitle()}"> Title </h4>
-                    <div class="course-metas">
-                        <div class="course-meta">
-                            <div class="cm-info">
-                                <h6>Topic</h6>
-                                <p class = "topic" th:text="${course.getTopic()}" > Topic</p>
-                            </div>
-                        </div>
-                        <div class="course-meta">
-                            <div class="cm-info">
-                                <h6>Starting Date</h6>
-                                <p class = "startingDate" th:text="${course.getStartingDate()}">Starting  Date</p>
-                            </div>
-                        </div>
-                        <div class="course-meta">
-                            <div class="cm-info">
-                                <h6>Students</h6>
-                                <p>5 Registered Students</p>
-                            </div>
-                        </div>
-                        <div class="course-meta">
-                            <div class="cm-info">
-                                <h6>Reviews</h6>
-                                <p>2 Reviews <span class="rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star is-fade"></i>
-									</span></p>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" class="site-btn price-btn">Enroll</a>
-                    <a href="#" class="site-btn buy-btn">See All Lectures</a>
-                </div>
-            </div>
+            <!-- Your existing course meta area code -->
         </div>
         <img src="/static/img/courses/single.jpg" alt="" class="course-preview">
     </div>
 </section>
 <!-- single course section end -->
 
-<!-- Page  -->
+<!-- Page -->
 <section class="blog-page spad pb-0">
     <div class="container">
         <div class="row">
             <div class="col-lg-9">
-
                 <!-- Lecture snippets -->
                 <div th:each="lecture : ${lectures}" class="blog-post" style="background-color: #f5f5f5; padding: 15px 100px 15px 15px; margin-bottom: 15px;">
-                    <h3 th:text="${lecture.title}">Lecture's title</h3>
-                    <div class="blog-metas">
-                        <!-- You can display any lecture metadata here -->
-                    </div>
-                    <p th:text="${lecture.description}">Lecture's description</p>
+                    <h3 th:text="${lecture.title}">Default Title</h3>
+                    <p th:text="${lecture.description}">Default Description</p>
                     <a th:href="@{'/courses/' + ${course.id} + '/lectures/' + ${lecture.id}}" class="site-btn readmore">See Lecture</a>
                 </div>
-
             </div>
         </div>
     </div>
 </section>
+
 
 <!-- footer section -->
 <footer class="footer-section spad pb-0">

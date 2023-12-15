@@ -26,6 +26,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RequestMapping("/courses")
 @Controller
@@ -70,6 +71,17 @@ public class CourseMvcController {
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
         }
+    }
+
+    @GetMapping("/{courseId}/lectures")
+    public String showAllLectures(@PathVariable("courseId") int courseId, Model model) {
+        Course course = courseService.get(courseId);
+        Set<Lecture> lectures = course.getLectures();
+
+        model.addAttribute("lectures", lectures);
+        model.addAttribute("course", course);
+
+        return "LecturesView";
     }
     @GetMapping("/new")
     public String showNewCoursePage(Model model, HttpSession session) {

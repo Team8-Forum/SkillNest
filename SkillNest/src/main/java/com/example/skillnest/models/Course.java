@@ -26,8 +26,9 @@ public class Course {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Lecture> lectures;
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Lecture> lectures;
+
 
     @Column(name = "starting_date")
     private LocalDate startingDate;
@@ -42,7 +43,7 @@ public class Course {
     private Set<User> users;
 
     public Course(int id, String title, String topic, String description,
-                  List<Lecture> lectures, LocalDate startingDate,
+                  Set<Lecture> lectures, LocalDate startingDate,
                   Set<User> users) {
         this.id = id;
         this.title = title;
@@ -89,11 +90,11 @@ public class Course {
         this.description = description;
     }
 
-    public List<Lecture> getLectures() {
+    public Set<Lecture> getLectures() {
         return lectures;
     }
 
-    public void setLectures(List<Lecture> lectures) {
+    public void setLectures(Set<Lecture> lectures) {
         this.lectures = lectures;
     }
 

@@ -3,12 +3,12 @@ package com.example.skillnest.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import org.hibernate.sql.ast.tree.update.Assignment;
-import org.springframework.data.annotation.Id;
+
+
 @Entity
 @Table(name="lectures")
 public class Lecture {
-    @jakarta.persistence.Id
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "lecture_id")
