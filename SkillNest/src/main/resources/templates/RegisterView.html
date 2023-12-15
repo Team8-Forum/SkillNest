@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>SkillNest - Register</title>
+    <title>WebUni - Education Template</title>
     <meta charset="UTF-8">
     <meta name="description" content="WebUni Education Template">
     <meta name="keywords" content="webuni, education, creative, html">
@@ -18,34 +18,10 @@
     <link rel="stylesheet" href="/static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}"/>
     <link rel="stylesheet" href="/static/css/owl.carousel.css" th:href="@{/css/owl.carousel.css}"/>
     <link rel="stylesheet" href="/static/css/style.css" th:href="@{/css/style.css}"/>
+
 </head>
 <body>
-<header class="header-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-3">
-                <div class="site-logo">
-                    <img src="/static/img/logo.png" alt="">
-                </div>
-                <div class="nav-switch">
-                    <i class="fa fa-bars"></i>
-                </div>
-            </div>
-            <div class="col-lg-9 col-md-9">
-                <a href="" class="site-btn header-btn">Login</a>
-                <nav class="main-menu">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="courses.html">Courses</a></li>
-                        <li><a href="blog.html">News</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
+<div th:replace="index.html :: navigation"></div>
 <section class="signup-section spad">
     <div class="signup-bg set-bg" data-setbg="img/signup-bg.jpg"></div>
     <div class="container-fluid">

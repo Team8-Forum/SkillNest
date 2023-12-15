@@ -61,7 +61,6 @@ public class UserServiceImpl implements UserService {
                 throw new AuthorizationException("Only admin or account's owners can modify a user");
             }
         }
-        checkIfUserIsUnique(updateUser);
         userRepository.update(updateUser);
     }
 

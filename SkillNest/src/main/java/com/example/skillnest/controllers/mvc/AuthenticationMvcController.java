@@ -8,6 +8,7 @@ import com.example.skillnest.models.User;
 import com.example.skillnest.models.dtos.LoginDto;
 import com.example.skillnest.models.dtos.RegisterDto;
 import com.example.skillnest.services.contracts.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -54,7 +55,7 @@ public class AuthenticationMvcController {
         try {
             authenticationHelper.verifyAuthentication(loginDto.getEmail(), loginDto.getPassword());
             httpSession.setAttribute("currentUser", loginDto.getEmail());
-            return "redirect:/users";
+            return "redirect:/";
         } catch (AuthorizationException e) {
             bindingResult.rejectValue("password", "auth_error", e.getMessage());
             return "LoginView";
@@ -62,8 +63,9 @@ public class AuthenticationMvcController {
     }
 
     @GetMapping("/logout")
-    public String handleLogout(HttpSession session) {
+    public String handleLogout(HttpSession session, HttpServletResponse response) {
         session.removeAttribute("currentUser");
+        response.reset();
         return "redirect:/";
     }
 

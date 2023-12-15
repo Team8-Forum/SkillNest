@@ -1,5 +1,6 @@
 package com.example.skillnest.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
@@ -32,6 +33,11 @@ public class Course {
 
     @Column(name = "starting_date")
     private LocalDate startingDate;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    @JsonIgnore
+    private User createdBy;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -104,6 +110,14 @@ public class Course {
 
     public void setStartingDate(LocalDate startingDate) {
         this.startingDate = startingDate;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Set<User> getUsers() {

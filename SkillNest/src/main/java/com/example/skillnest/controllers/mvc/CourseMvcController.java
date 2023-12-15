@@ -48,7 +48,12 @@ public class CourseMvcController {
     }
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {
-        return  session.getAttribute("currentUser") != null;
+        return session.getAttribute("currentUser") != null;
+    }
+
+    @ModelAttribute("getUserId")
+    public int populateGetUser(HttpSession session) {
+        return authenticationHelper.tryGetUserId(session);
     }
     @ModelAttribute("requestURI")
     public String requestURI(final HttpServletRequest request) {return  request.getRequestURI();}
@@ -57,19 +62,40 @@ public class CourseMvcController {
 
     @GetMapping
     public String showAllCourses(Model model) {
-        model.addAttribute("courses", courseService.get(new CourseFilterOptions()));
-        return "CourseView";
+        model.addAttribute("courses", courseService.getAll());
+        return "courses";
     }
     @GetMapping("/{id}")
-    public String showSingleCourse(@PathVariable int id, Model model) {
+    public String showSingleCourse(@PathVariable int id, Model model, HttpSession session) {
         try {
             Course course = courseService.get(id);
+            User user = authenticationHelper.tryGetCurrentUser(session);
             model.addAttribute("course", course);
+            model.addAttribute("enrolledUsers" ,course.getUsers().size());
+            model.addAttribute("user", user);
             return "CourseView";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
+        }
+    }
+
+    @GetMapping("/{courseId}/lectures/{lectureId}")
+    public String showLecture(@PathVariable int courseId, @PathVariable int lectureId, Model model, HttpSession session) {
+        try {
+            authenticationHelper.tryGetCurrentUser(session);
+            Course course = courseService.get(courseId);
+            Lecture lecture = lectureService.getById(lectureId);
+
+            model.addAttribute("lecture", lecture);
+            model.addAttribute("course", course);
+
+            return "LectureView";
+        } catch (EntityNotFoundException e) {
+            return "ErrorView";
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
         }
     }
 
@@ -95,7 +121,7 @@ public class CourseMvcController {
         return "CourseCreateView";
     }
     @PostMapping("/new")
-    public String createBeer(@Valid @ModelAttribute("course") CourseDto courseDto,
+    public String createCourse(@Valid @ModelAttribute("course") CourseDto courseDto,
                              BindingResult bindingResult,
                              Model model,
                              HttpSession session) {
@@ -163,7 +189,7 @@ public class CourseMvcController {
         }
 
         try {
-            Course course = courseMapper.fromDto(id, dto);
+            Course course = courseMapper.fromDto(id, dto,user);
             courseService.update(course, user);
             return "redirect:/beers";
         } catch (EntityNotFoundException e) {

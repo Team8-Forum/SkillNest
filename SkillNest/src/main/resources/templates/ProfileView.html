@@ -21,37 +21,76 @@
 
 </head>
 <body>
-<div th:replace="index.html :: navigation"></div>
-<section class="signup-section spad">
-    <div class="signup-bg set-bg" data-setbg="img/signup-bg.jpg"></div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="signup-warp">
-                    <div class="section-title text-white text-left">
-                        <h2>Login</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris
-                            scelerisque, at rutrum nulla dictum. Ut ac ligula sapien. Suspendisse cursus faucibus
-                            finibus.</p>
-                    </div>
-                    <!-- login form -->
-                    <form th:action="@{/auth/login}" th:object="${login}" method="post" class="signup-form">
-                        <div th:if="${#fields.hasErrors('email')}" class="alert alert-danger" role="alert" th:each="error : ${#fields.errors('email')}">
-                            <p th:text="${error}"></p>
-                        </div>
-                        <input type="text" th:field="*{email}" placeholder="Your E-mail">
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
 
-                        <div th:if="${#fields.hasErrors('password')}" class="alert alert-danger" role="alert" th:each="error : ${#fields.errors('password')}">
-                            <p th:text="${error}"></p>
+<!-- Header section -->
+<div th:replace="index.html :: navigation"></div>
+<!-- Header section end -->
+
+<!-- single course section -->
+<section class="single-course spad pb-0">
+    <div class="container">
+        <div class="course-meta-area">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="course-note">Profile</div>
+                    <div class="course-metas">
+                        <div class="course-meta">
+                            <div class="course-author">
+                                <div class="ca-pic set-bg" data-setbg="img/authors/2.jpg"></div>
+                                <h6 >Name</h6>
+                                <p th:text="${user.getFirstName() + ' ' + user.getLastName()}">William Parker</p>
+                            </div>
                         </div>
-                        <input type="password" th:field="*{password}" placeholder="Your Password">
-                        <button type="submit" class="site-btn">Login</button>
-                    </form>
+                        <div class="course-meta">
+                            <div class="cm-info">
+                                <h6>Role</h6>
+                                <p th:if="${user.isAdmin()}" th:text="#{admin.title}">Admin</p>
+                                <p th:if="${user.isTeacher()}" th:text="#{teacher.title}">Teacher</p>
+                                <p th:if="${!user.isAdmin() && !user.isTeacher()}" th:text="#{student.title}">Student</p>
+                            </div>
+                        </div>
+                        <div class="course-meta">
+                            <div class="cm-info">
+                                <h6>Email</h6>
+                                <p th:text="${user.getEmail()}">email</p>
+                            </div>
+                        </div>
+                        <div class="course-meta">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<!-- single course section end -->
+
+<section class="categories-section spad">
+    <div class="container">
+        <div class="section-title">
+            <h2>Enrolled Courses</h2>
+        </div>
+        <div class="row">
+            <!-- categories -->
+            <div th:each="course : ${courses}"class="col-lg-4 col-md-6">
+                <div class="categorie-item">
+                    <div class="ci-text">
+                        <h5 th:text="${course.getTitle()}">IT Development</h5>
+                        <p th:text="${course.getStartingDate()}">Starting Date</p>
+                        <p th:text="${course.getCreatedBy().getFirstName() + ' ' + course.getCreatedBy().getLastName()}">Creator</p>
+                        <a th:href="@{/courses/{courseId}(courseId=${course.getId()})}" class="site-btn">Go to course</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- footer section -->
 <footer class="footer-section spad pb-0">
     <div class="footer-top">
         <div class="footer-warp">
@@ -121,5 +160,15 @@
         </div>
     </div>
 </footer>
+<!-- footer section end -->
+
+
+<!--====== Javascripts & Jquery ======-->
+<script src="/static/js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script src="/static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="/static/js/mixitup.min.js" th:src="@{/js/mixitup.min.js}"></script>
+<script src="/static/js/circle-progress.min.js" th:src="@{/js/circle-progress.min.js}"></script>
+<script src="/static/js/owl.carousel.min.js" th:src="@{/js/owl.carousel.min.js}"></script>
+<script src="/static/js/main.js" th:src="@{/js/main.js}"></script>
 </body>
 </html>
