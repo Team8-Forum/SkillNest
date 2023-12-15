@@ -39,13 +39,8 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public Lecture create(LectureDto lectureDto, User user) {
+    public Lecture create(Lecture lecture, User user) {
         //user validation
-        Lecture lecture = new Lecture();
-        lecture.setTitle(lectureDto.getTitle());
-        lecture.setDescription(lectureDto.getDescription());
-        lecture.setAssignmentUrl(lectureDto.getAssignment());
-        lecture.setVideoUrl(lectureDto.getVideoUrl());
         return lectureRepository.create(lecture);
     }
 

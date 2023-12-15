@@ -22,6 +22,12 @@
 </head>
 <body>
 <div th:replace="index.html :: navigation"></div>
+<div class="page-info-section set-bg" data-setbg="img/bg.jpg">
+    <div class="container">
+        <div class="site-breadcrumb">
+        </div>
+    </div>
+</div>
 <section class="signup-section spad">
     <div class="signup-bg set-bg" data-setbg="img/signup-bg.jpg"></div>
     <div class="container-fluid">
@@ -49,6 +55,16 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+<section class="banner-section spad">
+    <div class="container">
+        <div class="section-title mb-0 pb-2">
+            <h2>Join Our Community Now!</h2>
+        </div>
+        <div class="text-center pt-5">
+            <a href="#" th:href="@{/auth/register}" class="site-btn">Register Now</a>
         </div>
     </div>
 </section>

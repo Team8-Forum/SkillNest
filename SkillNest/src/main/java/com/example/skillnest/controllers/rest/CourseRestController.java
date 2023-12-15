@@ -61,7 +61,7 @@ public class CourseRestController {
                        @Valid @RequestBody CourseDto courseDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            Course course = courseMapper.fromDto(courseDto);
+            Course course = courseMapper.fromDto(courseDto,user);
             service.create(course, user);
             return course;
         } catch (EntityNotFoundException e) {

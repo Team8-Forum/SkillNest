@@ -41,7 +41,9 @@
 		</div>
 	</div>
 	<!-- Page info end -->
-
+<div>
+<a th:if="${isAuthenticated && user.isAdmin() || user.isTeacher()}" th:href="@{/courses/new}" class="site-btn buy-btn">Create Course</a>
+</div>
 	<!-- course section -->
 	<section class="course-section spad pb-0">
 		<div class="course-warp">

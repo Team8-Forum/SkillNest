@@ -7,15 +7,12 @@ import com.example.skillnest.helpers.AuthenticationHelper;
 import com.example.skillnest.helpers.CourseMapper;
 import com.example.skillnest.helpers.LectureMapper;
 import com.example.skillnest.models.Course;
-import com.example.skillnest.models.CourseFilterOptions;
 import com.example.skillnest.models.Lecture;
 import com.example.skillnest.models.User;
-import com.example.skillnest.models.dtos.CourseCreateDto;
 import com.example.skillnest.models.dtos.CourseDto;
-import com.example.skillnest.models.dtos.FilterCourseDto;
+import com.example.skillnest.models.dtos.LectureDto;
 import com.example.skillnest.services.contracts.CourseService;
 import com.example.skillnest.services.contracts.LectureService;
-import com.example.skillnest.services.contracts.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -37,13 +34,16 @@ public class CourseMvcController {
 
     private final CourseMapper courseMapper;
 
+    private final LectureMapper lectureMapper;
+
     private final AuthenticationHelper authenticationHelper;
 
     public CourseMvcController(CourseService courseService, LectureService lectureService, CourseMapper courseMapper,
-                               AuthenticationHelper authenticationHelper) {
+                               LectureMapper lectureMapper, AuthenticationHelper authenticationHelper) {
         this.courseService = courseService;
         this.lectureService = lectureService;
         this.courseMapper = courseMapper;
+        this.lectureMapper = lectureMapper;
         this.authenticationHelper = authenticationHelper;
     }
     @ModelAttribute("isAuthenticated")
@@ -61,8 +61,10 @@ public class CourseMvcController {
     public List<Lecture> populateLectures() {return  lectureService.get();}
 
     @GetMapping
-    public String showAllCourses(Model model) {
+    public String showAllCourses(Model model, HttpSession session) {
+        User user = authenticationHelper.tryGetCurrentUser(session);
         model.addAttribute("courses", courseService.getAll());
+        model.addAttribute("user", user);
         return "courses";
     }
     @GetMapping("/{id}")
@@ -98,12 +100,14 @@ public class CourseMvcController {
     }
 
     @GetMapping("/{courseId}/lectures")
-    public String showAllLectures(@PathVariable("courseId") int courseId, Model model) {
+    public String showAllLectures(@PathVariable("courseId") int courseId, Model model, HttpSession session) {
         Course course = courseService.get(courseId);
         Set<Lecture> lectures = course.getLectures();
+        User user = authenticationHelper.tryGetCurrentUser(session);
 
         model.addAttribute("lectures", lectures);
         model.addAttribute("course", course);
+        model.addAttribute("user",user);
 
         return "LecturesView";
     }
@@ -116,7 +120,7 @@ public class CourseMvcController {
         }
 
         model.addAttribute("course", new CourseDto());
-        return "CourseCreateView";
+        return "CourseFormView";
     }
     @PostMapping("/new")
     public String createCourse(@Valid @ModelAttribute("course") CourseDto courseDto,
@@ -130,12 +134,8 @@ public class CourseMvcController {
             return "redirect:/auth/login";
         }
 
-        if (bindingResult.hasErrors()) {
-            return "CourseCreateView";
-        }
-
         try {
-            Course course = courseMapper.fromDto(courseDto);
+            Course course = courseMapper.fromDto(courseDto, user);
             courseService.create(course, user);
             return "redirect:/courses";
         } catch (EntityNotFoundException e) {
@@ -144,7 +144,40 @@ public class CourseMvcController {
             return "ErrorView";
         } catch (EntityDuplicateException e) {
             bindingResult.rejectValue("name", "duplicate_course", e.getMessage());
-            return "CourseCreateView";
+            return "CourseFormView";
+        }
+    }
+
+    @GetMapping("/{courseId}/lectures/create")
+    public String showLectureForm(@PathVariable("courseId") int courseId, Model model, HttpSession session) {
+        User user = authenticationHelper.tryGetCurrentUser(session);
+
+        Course course = courseService.get(courseId);
+        LectureDto lectureDTO = new LectureDto();
+
+        model.addAttribute("course", course);
+        model.addAttribute("lecture", lectureDTO);
+
+        return "LectureFormView";
+    }
+
+    @PostMapping("/{courseId}/lectures/create")
+    public String createLecture(@PathVariable("courseId") int courseId, @Valid @ModelAttribute("lecture") LectureDto lectureDTO,
+                                BindingResult bindingResult, Model model, HttpSession session) {
+
+        if (bindingResult.hasErrors()) {
+            return "LectureFormView";
+        }
+
+        try {
+            User user = authenticationHelper.tryGetCurrentUser(session);
+            Lecture lecture = lectureMapper.dtoToObject(lectureDTO, courseId);
+            lectureService.create(lecture, user);
+            return "redirect:/courses/" + courseId;
+        } catch (EntityNotFoundException e) {
+            return "ErrorView";
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
         }
     }
 

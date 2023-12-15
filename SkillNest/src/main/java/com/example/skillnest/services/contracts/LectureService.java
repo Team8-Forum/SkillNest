@@ -11,7 +11,7 @@ public interface LectureService {
 
     List<Lecture> get();
 
-    Lecture create(LectureDto lectureDto, User user);
+    Lecture create(Lecture lecture, User user);
 
     Lecture update(LectureDto lectureDto, User user, int lectureId);
 
