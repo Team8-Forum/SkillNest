@@ -84,7 +84,7 @@ public class CourseMvcController {
     @GetMapping("/{courseId}/lectures/{lectureId}")
     public String showLecture(@PathVariable int courseId, @PathVariable int lectureId, Model model, HttpSession session) {
         try {
-            authenticationHelper.tryGetCurrentUser(session);
+           authenticationHelper.tryGetCurrentUser(session);
             Course course = courseService.get(courseId);
             Lecture lecture = lectureService.getById(lectureId);
 
@@ -94,8 +94,6 @@ public class CourseMvcController {
             return "LectureView";
         } catch (EntityNotFoundException e) {
             return "ErrorView";
-        } catch (AuthorizationException e) {
-            return "redirect:/auth/login";
         }
     }
 

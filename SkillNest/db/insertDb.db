@@ -24,7 +24,12 @@ VALUES
 -- Insert data into courses table
 INSERT INTO courses (title, topic, description, starting_date, created_by)
 VALUES
-    ('Introduction to Programming', 'Computer Science', 'Learn the basics of programming.', '2023-01-01', 5),
+    ('Introduction to Programming', 'Computer Science', '
+Welcome to "Introduction to Programming," an immersive course designed to empower you with the essential skills and knowledge needed to embark on a thrilling journey into the world of coding. This course serves as a gateway for individuals at all experience levels, providing a comprehensive introduction to the fundamental concepts that underpin modern programming languages. Whether you're a complete novice eager to understand the basics or someone looking to solidify your foundation, this course caters to learners with diverse backgrounds.
+
+Throughout the program, you will explore key programming principles such as variables, loops, conditionals, and functions. Our hands-on approach ensures that you not only grasp theoretical concepts but also gain practical experience by working on coding exercises and projects. Guided by experienced instructors, you'll unravel the logic behind writing efficient and effective code, developing problem-solving skills crucial for any aspiring programmer.
+
+By the end of this course, you will have a strong foundation in programming, allowing you to confidently pursue further studies in specific languages or dive into exciting projects of your own. Whether you aspire to become a software developer, data scientist, or simply want to enhance your problem-solving abilities, "Introduction to Programming" equips you with the tools to turn your coding aspirations into reality. Join us on this exciting educational journey, and unlock the door to a world of endless possibilities in the realm of programming.', '2023-01-01', 5),
     ('Web Development Fundamentals', 'Web Development', 'Introduction to web development.', '2023-02-01', 5),
     ('Data Science Essentials', 'Data Science', 'Foundational concepts of data science.', '2023-03-01', 5),
     ('Graphic Design for Beginners', 'Design', 'Basic principles of graphic design.', '2023-04-01', 5),
@@ -66,7 +71,8 @@ VALUES
 -- Insert data into lectures table
 INSERT INTO lectures (course_id, title, description, assignment_url, video_url, user_id)
 VALUES
-    (1, 'Introduction to Programming Basics', 'Overview of programming fundamentals.', '/assignments/assignment1.pdf', '/videos/video1.mp4', 5),
+    (1, 'Introduction to Programming Basics', '
+In this engaging introductory lecture, we delve into the fundamentals of programming, demystifying the world of code for beginners. Explore the essential concepts that form the backbone of programming, gaining a solid understanding of variables, loops, and conditional statements. Navigate through the logic that powers computer programs and witness how these principles come to life through real-world examples and hands-on exercises. Whether you're a complete novice or someone looking to solidify your programming foundation, this lecture provides an accessible and insightful journey into the basics of programming, laying the groundwork for your exciting venture into the vast realm of computer science.', '/assignments/assignment1.pdf', '/videos/video1.mp4', 5),
     (2, 'HTML and CSS Fundamentals', 'Learn the basics of web development.', '/assignments/assignment2.pdf', '/videos/video2.mp4', 5),
     (3, 'Introduction to Data Science', 'Exploring the field of data science.', '/assignments/assignment3.pdf', '/videos/video3.mp4', 5),
     (4, 'Design Principles', 'Understanding the principles of graphic design.', '/assignments/assignment4.pdf', '/videos/video4.mp4', 5),

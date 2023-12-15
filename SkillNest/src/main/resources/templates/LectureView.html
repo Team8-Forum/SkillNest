@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>WebUni - Education Template</title>
+    <title>Lecture View</title>
+    <link rel="stylesheet" th:href="@{/static/css/style.css}" />
     <meta charset="UTF-8">
     <meta name="description" content="WebUni Education Template">
     <meta name="keywords" content="webuni, education, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Favicon -->
+
     <link href="/static/img/favicon.ico" rel="shortcut icon"/>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i,800,800i"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="/static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}"/>
     <link rel="stylesheet" href="/static/css/owl.carousel.css" th:href="@{/css/owl.carousel.css}"/>
     <link rel="stylesheet" href="/static/css/style.css" th:href="@{/css/style.css}"/>
+
+
 
 </head>
 <body>
@@ -28,7 +30,32 @@
 </div>
 
 <!-- Header section -->
-<div th:replace="index.html :: navigation"></div>
+<header class="header-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="site-logo">
+                    <img src="/static/img/logo.png" alt="">
+                </div>
+                <div class="nav-switch">
+                    <i class="fa fa-bars"></i>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9">
+                <a href="" class="site-btn header-btn">Login</a>
+                <nav class="main-menu">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">About us</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="blog.html">News</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
 <!-- Header section end -->
 
 <!-- Page info -->
@@ -42,43 +69,97 @@
 </div>
 <!-- Page info end -->
 
+
+<!-- single course section -->
+<section class="single-course spad pb-0">
+    <div class="container">
+        <div class="course-meta-area">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="course-note">Featured Course</div>
+                    <h4 class = "title" th:text="${course.getTitle()}"> Title </h4>
+                    <div class="course-metas">
+                        <div class="course-meta">
+                            <div class="cm-info">
+                                <h6>Topic</h6>
+                                <p class = "topic" th:text="${course.getTopic()}" > Topic</p>
+                            </div>
+                        </div>
+                        <div class="course-meta">
+                            <div class="cm-info">
+                                <h6>Starting Date</h6>
+                                <p class = "startingDate" th:text="${course.getStartingDate()}">Starting  Date</p>
+                            </div>
+                        </div>
+                        <div class="course-meta">
+                            <div class="cm-info">
+                                <h6>Students</h6>
+                                <p>5 Registered Students</p>
+                            </div>
+                        </div>
+                        <div class="course-meta">
+                            <div class="cm-info">
+                                <h6>Reviews</h6>
+                                <p>2 Reviews <span class="rating">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star is-fade"></i>
+									</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="site-btn price-btn">Enroll</a>
+                    <a href="#" class="site-btn buy-btn">See All Lectures</a>
+                </div>
+            </div>
+        </div>
+        <img src="/static/img/courses/single.jpg" alt="" class="course-preview">
+        <div class="row">
+        </div>
+    </div>
+</section>
+<!-- single course section end -->
+
 <div style="background-color: #f5f5f5; padding: 20px;" class="text-center">
     <h1 th:text="${lecture.title}"></h1>
     <p th:text="${lecture.description}"></p>
 
-    <!-- Embedded YouTube Video -->
-    <iframe width="560" height="315" th:src="${lecture.videoUrl}" frameborder="0" allowfullscreen></iframe>
+    <section class="youtube-video-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Featured Video</h2>
+                    <!-- Embedded YouTube Video -->
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/zOjov-2OZ0E" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Wikipedia Search Bar -->
-    <div class="form-group">
-        <label for="wikipediaSearch">Wikipedia Search:</label>
-        <input type="text" id="wikipediaSearch" name="wikipediaSearch" placeholder="Search on Wikipedia">
-        <button class="site-btn buy-btn" onclick="searchWikipedia()">Search</button>
-    </div>
-
-    <!-- Assignment Download Button -->
-    <div>
-        <a th:href="@{'/lectures/' + ${lecture.id}/download-assignment}" download="assignment.txt">
-            <button class="site-btn price-btn">Download Assignment</button>
-        </a>
-    </div>
-
-    <!-- Assignment Upload Form -->
-    <div class="form-group">
-        <form th:action="@{'/lectures/' + ${lecture.id}/upload-assignment}" method="post" enctype="multipart/form-data">
-            <label for="assignmentFile">Upload Assignment:</label>
-            <input type="file" id="assignmentFile" name="assignmentFile" accept=".txt">
-            <button type="submit" class="site-btn">Upload Assignment</button>
-        </form>
+    <!-- Assignment Download and Upload Buttons -->
+    <div class="row">
+        <div class="col-md-6">
+            <a th:href="@{'/lectures/' + ${lecture.id}/download-assignment}" download="assignment.txt">
+                <button class="site-btn price-btn">Download Assignment</button>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <!-- Assignment Upload Form -->
+            <div class="form-group">
+                <form th:action="@{'/lectures/' + ${lecture.id}/upload-assignment}" method="post" enctype="multipart/form-data">
+                    <label for="assignmentFile">Upload Assignment:</label>
+                    <input type="file" id="assignmentFile" name="assignmentFile" accept=".txt">
+                    <button type="submit" class="site-btn">Upload Assignment</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
-<script>
-    function searchWikipedia() {
-        // Implement your Wikipedia search logic here
-        // You may use JavaScript or make an AJAX request to your server
-    }
-</script>
+
+
 
 <!-- footer section -->
 <footer class="footer-section spad pb-0">
