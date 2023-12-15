@@ -1,6 +1,7 @@
 package com.example.skillnest.helpers;
 
 import com.example.skillnest.models.Course;
+import com.example.skillnest.models.User;
 import com.example.skillnest.models.dtos.CourseDto;
 import com.example.skillnest.services.CourseServiceImpl;
 import com.example.skillnest.services.contracts.UserService;
@@ -19,10 +20,11 @@ public class CourseMapper {
         this.userService = userService;
     }
 
-    public Course fromDto(int id, CourseDto dto) {
+    public Course fromDto(int id, CourseDto dto, User user) {
         Course courseToBeUpdated = courseService.get(id);
         courseToBeUpdated.setTitle(dto.getTitle());
         courseToBeUpdated.setDescription(dto.getContent());
+        courseToBeUpdated.setCreatedBy(user);
         return courseToBeUpdated;
     }
 

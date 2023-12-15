@@ -78,7 +78,7 @@ public class CourseRestController {
                        @Valid @RequestBody CourseDto courseDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            Course course = courseMapper.fromDto(id, courseDto);
+            Course course = courseMapper.fromDto(id, courseDto, user);
             service.update(course, user);
             return course;
         } catch (EntityNotFoundException e) {

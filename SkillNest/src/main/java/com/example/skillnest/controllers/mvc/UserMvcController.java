@@ -7,6 +7,7 @@ import com.example.skillnest.helpers.ImageHelper;
 import com.example.skillnest.helpers.UserMapper;
 import com.example.skillnest.models.User;
 import com.example.skillnest.models.dtos.UserDto;
+import com.example.skillnest.models.dtos.ChangePasswordDto;
 import com.example.skillnest.services.contracts.CourseService;
 import com.example.skillnest.services.contracts.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.List;
 
 @Controller
@@ -53,11 +55,12 @@ public class UserMvcController {
         }
     }
 
-    @GetMapping
-    public String showUserPage(HttpSession httpSession, Model model) {
+    @GetMapping("/{id}")
+    public String showUserPage(HttpSession httpSession, Model model ,@PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetCurrentUser(httpSession);
-                model.addAttribute("loggedIn", user);
+                model.addAttribute("user", user);
+                model.addAttribute("courses", user.getCourses());
                 return "ProfileView";
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
@@ -111,6 +114,56 @@ public class UserMvcController {
 
     }
 
+    @GetMapping("/{id}/update-password")
+    public String showUpdatePasswordPage(@PathVariable int id, Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+
+        try {
+            User existingUser = userService.getById(id);
+            model.addAttribute("password", new ChangePasswordDto());
+            model.addAttribute("user", existingUser);
+            return "EditPasswordView";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "ErrorView";
+        }
+    }
+
+    @PostMapping("/{id}/update-password")
+    public String changePassword (@Valid @ModelAttribute("password") ChangePasswordDto changePasswordDto, BindingResult errors,
+                                  @PathVariable int id, Model model, HttpSession session ) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+        user = userService.getById(id);
+        model.addAttribute("user", user);
+
+        if(errors.hasErrors()) {
+            return "EditPasswordView";
+        }
+
+        String oldPassword = changePasswordDto.getOldPassword();
+        String newPassword = changePasswordDto.getNewPassword();
+        String confirmPassword = changePasswordDto.getConfirmPassword();
+
+        try {
+            userService.changePassword(user, oldPassword, newPassword, confirmPassword);
+            return "redirect:/users/" + user.getId();
+        } catch (AuthorizationException | InputMismatchException e) {
+            errors.rejectValue("newPassword", "password_mismatch", e.getMessage());
+            return "EditPasswordView";
+        }
+
+    }
+
     @PostMapping("/picture")
     public String addProfilePhoto(@RequestParam("file") MultipartFile file, HttpSession httpSession) {
         try {
@@ -126,27 +179,14 @@ public class UserMvcController {
     }
 
     @PostMapping("/course/{courseId}/enroll")
-    public String showUserCourses(HttpSession httpSession, Model model, @PathVariable int courseId) {
+    public String enrollCourse(HttpSession httpSession, Model model, @PathVariable int courseId) {
         try {
             User user = authenticationHelper.tryGetCurrentUser(httpSession);
             userService.enrollCourse(user, courseId);
             model.addAttribute("loggedIn", user);
             model.addAttribute("enrolledCourses", courseService.getByUserEnrolled(user.getId()));
-            return "UserCoursesView";
+            return "redirect:/users/" + user.getId();
         } catch (AuthorizationException e) {
-            return "redirect:/auth/login";
-        }
-    }
-
-    @GetMapping("/all")
-    public String showAllUsers(HttpSession session, Model model) {
-        try {
-            User user = authenticationHelper.tryGetCurrentUser(session);
-            List<User> users = userService.getAll();
-            model.addAttribute("users",users);
-            model.addAttribute("loggedIn",user);
-            return "UsersView";
-        } catch (AuthorizationException e){
             return "redirect:/auth/login";
         }
     }
